@@ -1,3 +1,12 @@
+<?php
+  require('assets/php/Consultas.php');
+  $consultas = new Consultas();
+  $datas = $consultas->GetData();
+  $tot = $consultas->getDataTotal();
+  $prom = $consultas->getDataAVG();
+  $medi = $consultas->getDataMediana();
+  $coche = $consultas->getDataCocheRep();
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,65 +36,110 @@
         </nav>
         <div class="container">
             <div class="row text-center">
-                <div class="col"><button class="btn btn-primary" data-bss-hover-animate="swing" type="button" style="color: rgb(0,0,0);background: rgb(255,255,255);">Ver promedio</button></div>
-                <div class="col"><button class="btn btn-primary" data-bss-hover-animate="swing" type="button" style="background: rgb(255,255,255);color: rgb(0,0,0);">Ver mediana</button></div>
-                <div class="col"><button class="btn btn-primary" data-bss-hover-animate="swing" type="button" style="color: rgb(0,0,0);background: rgb(255,255,255);">Ver matriz</button></div>
+                <div class="col"><button data-toggle="modal" data-target="#prom" class="btn btn-primary" data-bss-hover-animate="swing" type="button" style="color: rgb(0,0,0);background: rgb(255,255,255);" >Ver promedio</button></div>
+                <div class="col"><button data-toggle="modal" data-target="#medi" class="btn btn-primary" data-bss-hover-animate="swing" type="button" style="background: rgb(255,255,255);color: rgb(0,0,0);">Ver mediana</button></div>
+                <div class="col"><button data-toggle="modal" data-target="#casoespec" class="btn btn-primary" data-bss-hover-animate="swing" type="button" style="color: rgb(0,0,0);background: rgb(255,255,255);">Ver matriz</button></div>
             </div>
         </div>
         <div class="container hero">
             <h1 class="text-center">Datos del estacionamiento</h1>
             <div class="table-responsive">
-                <table class="table">
+                <table class="table" style="">
                     <thead>
                         <tr class="text-center" style="background: var(--gray-dark);color: var(--light);">
-                            <th>Column 1</th>
+                            <th>CveReg</th>
+                            <th>Cliente</th>
+                            <th>Fecha Entrada</th>
+                            <th>Fecha Salida</th>
+                            <th>Placas</th>
+                            <th>Dejo llave</th>
+                            <th>Horas cobradas</th>
+                            <th>#Noches</th>
+                            <th>Perdio Ticket</th>
+                            <th>Sincronizado</th>
+                            <th>Pagado</th>
+                            <th>IVA</th>
+                            <th>Total Pagado</th>
+                            <th>Cobrado Por</th>
+                            <th>Fotos</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-center" style="background: var(--white);">
-                            <td>Cell 1</td>
-                        </tr>
+                        <div class="" style="width:500px; height:100px; overflow:auto;">
+                          <?php foreach ($datas as $data) {?>
+                          <tr class="text-center" style="background: var(--white);">
+                              <td><?php echo $data['CveReg'];?></td>
+                              <td><?php echo $data['Cliente'];?></td>
+                              <td><?php echo $data['FechaEntrada'];?></td>
+                              <td><?php echo $data['FechaSalida'];?></td>
+                              <td><?php echo $data['Placas'];?></td>
+                              <td><?php echo $data['DejoLlave'];?></td>
+                              <td><?php echo $data['HorasCobradas'];?></td>
+                              <td><?php echo $data['NumNoches'];?></td>
+                              <td><?php echo $data['PerdioTicket'];?></td>
+                              <td><?php echo $data['Sincronizado'];?></td>
+                              <td><?php echo $data['Pagado'];?></td>
+                              <td><?php echo $data['IVA'];?></td>
+                              <td>$<?php echo $data['TotalPagado'];?></td>
+                              <td><?php echo $data['CobradoPor'];?></td>
+                              <td><?php echo $data['Fotos'];?></td>
+                          </tr>
+                          <?php } ?>
+                        </div>
                     </tbody>
                 </table>
             </div>
         </div>
     </header>
-    <div class="modal fade" role="dialog" tabindex="-1">
+    <div id="prom" class="modal fade" role="dialog" tabindex="-1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">La media de los datos es:</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">La media del Total Pagado es: </h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
-                    <p></p>
+                  <?php foreach ($tot as $t): ?>
+                    <p>Total del Total Pagado: $<?php echo $t['TOTAL']; ?></p>
+                  <?php endforeach; ?>
+                    <?php foreach ($prom as $p): ?>
+                      <p>Promedio: $<?php echo $p['PROMEDIO']; ?></p>
+                    <?php endforeach; ?>
                 </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Cerrar</button><button class="btn btn-primary" type="button">Ok</button></div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Cerrar</button></div>
             </div>
         </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1">
+    <div id="medi" class="modal fade" role="dialog" tabindex="-1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">La mediana de los datos es:</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">La mediana del Total Pagado es:</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
-                    <p></p>
+                  <?php foreach ($tot as $t): ?>
+                    <p>Total del Total Pagado: $<?php echo $t['TOTAL']; ?></p>
+                  <?php endforeach; ?>
+                  <?php foreach ($medi as $m): ?>
+                    <p>Mediana: $<?php echo $m['MEDIANA']; ?></p>
+                  <?php endforeach; ?>
                 </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Cerrar</button><button class="btn btn-primary" type="button">Ok</button></div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Cerrar</button></div>
             </div>
         </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1">
+    <div id="casoespec" class="modal fade" role="dialog" tabindex="-1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Los pagos del carro son:</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
-                    <p></p>
+                  <p>El coche con placas JJJ4657 tiene los siguientes pagos: </p>
+                  <?php foreach ($coche as $c): ?>
+                    <p>$<?php echo $c['TotalPagado']; ?></p>
+                  <?php endforeach; ?>
                 </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Cerrar</button><button class="btn btn-primary" type="button">Ok</button></div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Cerrar</button></div>
             </div>
         </div>
     </div>
