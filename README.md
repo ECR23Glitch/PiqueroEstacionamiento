@@ -5,7 +5,8 @@ Utiliza los datos del archivo adjunto para realizar una interfaz que:
 3. Como opcional, hay un auto que aparece repetido, intenta implementar únicamente para ese caso un tree grid que muestre todos sus pagos.
 
 
-Link de prueba: piqueroestacionamiento.samuraistudio.com.mx
+Link de prueba: piqueroestacionamiento.samuraistudio.com.mx 
+
 El excel fue exportado mediante CSV a la base de datos de MySQL
 
 Usando:
