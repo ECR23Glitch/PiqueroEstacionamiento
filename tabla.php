@@ -135,9 +135,18 @@
                 </div>
                 <div class="modal-body">
                   <p>El coche con placas JJJ4657 tiene los siguientes pagos: </p>
-                  <?php foreach ($coche as $c): ?>
-                    <p>$<?php echo $c['TotalPagado']; ?></p>
-                  <?php endforeach; ?>
+                  <?php
+                  $sum = 0;
+                  $cont = 0;
+                  foreach ($coche as $c): ?>
+                    <p>$<?php echo $c['TotalPagado'];
+                        $sum = $sum + $c['TotalPagado'];
+                        $cont = $cont + 1;
+                    ?></p>
+                  <?php endforeach;
+                  $prom = $sum/$cont;
+                  ?>
+                  <p>Siendo su promedio de pago: $<?php echo $prom; ?></p>
                 </div>
                 <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Cerrar</button></div>
             </div>
